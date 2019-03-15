@@ -180,7 +180,7 @@ void loop()
     imu::Quaternion quat = bno.getQuat();
     imu::Vector<3> linearAcceleration = bno.getVector(Adafruit_BNO055::VECTOR_LINEARACCEL);
     imu::Vector<3> gravity = bno.getVector(Adafruit_BNO055::VECTOR_GRAVITY);
-    uint8_t sys, gyro, accel, mag, bestAccel = 0;
+    uint8_t sys, gyro, accel, mag = 0;
     bno.getCalibration(&sys, &gyro, &accel, &mag);
     t5 = millis();
 
@@ -212,14 +212,6 @@ void loop()
     file.print(accel);
     file.println(format(t5,8));
 
-    if (accel > bestAccel)
-    {
-      Serial.print("Accel cal = ");    
-      Serial.print(accel);
-      Serial.print(", best = ");    
-      Serial.println(bestAccel);
-      bestAccel = accel;
-    }
     digitalWrite(2,LOW);
   }
   else if (runState == RUNSTATE_STOP)
