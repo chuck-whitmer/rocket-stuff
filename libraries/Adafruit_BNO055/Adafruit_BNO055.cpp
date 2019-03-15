@@ -52,7 +52,7 @@ Adafruit_BNO055::Adafruit_BNO055(int32_t sensorID, uint8_t address)
     @brief  Sets up the HW
 */
 /**************************************************************************/
-bool Adafruit_BNO055::begin(adafruit_bno055_opmode_t mode)
+bool Adafruit_BNO055::begin(adafruit_bno055_opmode_t mode, adafruit_bno055_acc_range_t range=ACC_RANGE_4G)
 {
   /* Enable I2C */
   Wire.begin();
@@ -88,6 +88,8 @@ bool Adafruit_BNO055::begin(adafruit_bno055_opmode_t mode)
   write8(BNO055_PWR_MODE_ADDR, POWER_MODE_NORMAL);
   delay(10);
 
+  setAccRange(range);
+  
   write8(BNO055_PAGE_ID_ADDR, 0);
 
   /* Set the output units */
@@ -192,11 +194,11 @@ void Adafruit_BNO055::setExtCrystalUse(boolean usextal)
 
 void Adafruit_BNO055::setAccRange(adafruit_bno055_acc_range_t range)
 {
-  adafruit_bno055_opmode_t modeback = _mode;
+//  adafruit_bno055_opmode_t modeback = _mode;
 
   /* Switch to config mode (just in case since this is the default) */
   //setMode(OPERATION_MODE_CONFIG);
-  delay(25);
+  //delay(25);
   write8(BNO055_PAGE_ID_ADDR, 1);
   delay(10);
   byte bits = read8(BNO055_ACC_CONFIG_ADDR);
@@ -207,7 +209,7 @@ void Adafruit_BNO055::setAccRange(adafruit_bno055_acc_range_t range)
   write8(BNO055_PAGE_ID_ADDR, 0);
   delay(10);
   //setMode(modeback);
-  delay(20);
+  //delay(20);
 }
 
 

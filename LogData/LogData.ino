@@ -7,7 +7,7 @@
 #include "SparkFunMPL3115A2.h"
 
 #include <Adafruit_Sensor.h>
-#include <Adafruit_BNO055.h>
+#include "Adafruit_BNO055.h"
 
 MPL3115A2 barometer;
 
@@ -57,13 +57,13 @@ void setup() {
 
   // Configure the IMU
   Serial.println("Initialize IMU");
-  if(!bno.begin(Adafruit_BNO055::OPERATION_MODE_IMUPLUS))
+  if(!bno.begin(Adafruit_BNO055::OPERATION_MODE_IMUPLUS, Adafruit_BNO055::ACC_RANGE_8G))
   {
     Serial.print("No BNO055 detected");
     while(1);
   }
   bno.setExtCrystalUse(true);
-  bno.setAccRange(Adafruit_BNO055::ACC_RANGE_8G);
+  //bno.setAccRange(Adafruit_BNO055::ACC_RANGE_8G);
   
   Serial.println("Initializing SD card");
   if (!SD.begin(sdChipSelect))

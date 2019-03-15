@@ -296,7 +296,7 @@ class Adafruit_BNO055 : public Adafruit_Sensor
 #else
     Adafruit_BNO055 ( int32_t sensorID = -1, uint8_t address = BNO055_ADDRESS_A );
 #endif
-    bool  begin               ( adafruit_bno055_opmode_t mode = OPERATION_MODE_NDOF );
+    bool  begin               ( adafruit_bno055_opmode_t mode = OPERATION_MODE_NDOF , adafruit_bno055_acc_range_t range=ACC_RANGE_4G);
     void  setMode             ( adafruit_bno055_opmode_t mode );
     void  setAxisRemap        ( adafruit_bno055_axis_remap_config_t remapcode );
     void  setAxisSign         ( adafruit_bno055_axis_remap_sign_t remapsign );
