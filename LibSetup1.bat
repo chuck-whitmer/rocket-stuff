@@ -11,6 +11,7 @@
 ::
 :: The following commands need to be run as administrator from the rocket-stuff folder.
 ::
+if not exist libraries md libraries
 cd libraries
 mklink /d cw_Adafruit_BNO055 ..\..\ArduinoLibraries\cw_Adafruit_BNO055\
 mklink /d Adafruit_BNO055 ..\..\ArduinoLibraries\Adafruit_BNO055\
