@@ -192,7 +192,7 @@ void loop()
     }
     file.close();
   }
-  waitForTick(20);
+  waitForTick(5);
 }
 
 File getUniqueFile()
