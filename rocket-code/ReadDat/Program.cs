@@ -10,6 +10,8 @@ namespace RocketCode
     class Program
     {
         static string filename = null;
+        static bool doDump = false;
+        static bool doStats = false;
 
         static void Main(string[] args)
         {
@@ -17,47 +19,55 @@ namespace RocketCode
 
             try
             {
-                BinaryReader file = new BinaryReader(File.Open(filename, FileMode.Open));
-                if (file.ReadByte() != '\xCC') throw new Exception("Invalid rocket data file");
-                if (file.ReadByte() != '\x01') throw new Exception("Unknown rocket data format");
-                long bytesLeftToRead = file.BaseStream.Length - 2;
+                LogFile data = new LogFile(filename);
 
-                // Format 01 consists of repeated records.
-                // time, altitude, accelerometer vector, magnetometer vector, gyroscope vector
-                const long recordSize = sizeof(UInt32) + sizeof(float) + 9 * sizeof(Int16);
-                while (bytesLeftToRead >= recordSize)
+                if (doDump)
                 {
-                    UInt32 time = file.ReadUInt32();
-                    double altitude = file.ReadSingle();
-                    double[] acc = ReadAndScaleVector(file, 100.0);
-                    double[] mag = ReadAndScaleVector(file, 16.0);
-                    double[] gyro = ReadAndScaleVector(file, 16.0);
-                    bytesLeftToRead -= recordSize;
+                    int n = data.rawTimes.Length;
+                    for (int i = 0; i < n; i++)
+                    {
+                        UInt32 time = data.rawTimes[i];
+                        double altitude = data.rawAltitude[i];
+                        float[] acc = data.rawAccelerometer[i];
+                        float[] mag = data.rawMagnetometer[i];
+                        float[] gyro = data.rawGyroscope[i];
 
-                    Console.Write("{0,10}", time);
-                    Console.Write(" alt {0,7:0.0}", altitude);
-                    Console.Write(" acc {0,8:0.00}{1,8:0.00}{2,8:0.00}", acc[0], acc[1], acc[2]);
-                    Console.Write(" mag {0,8:0.00}{1,8:0.00}{2,8:0.00}", mag[0], mag[1], mag[2]);
-                    Console.Write(" gyro {0,8:0.00}{1,8:0.00}{2,8:0.00}", gyro[0], gyro[1], gyro[2]);
-                    Console.WriteLine();
+                        Console.Write("{0,10}", time);
+                        Console.Write(" alt {0,7:0.0}", altitude);
+                        Console.Write(" acc {0,8:0.00}{1,8:0.00}{2,8:0.00}", acc[0], acc[1], acc[2]);
+                        Console.Write(" mag {0,8:0.00}{1,8:0.00}{2,8:0.00}", mag[0], mag[1], mag[2]);
+                        Console.Write(" gyro {0,8:0.00}{1,8:0.00}{2,8:0.00}", gyro[0], gyro[1], gyro[2]);
+                        Console.WriteLine();
+                    }
                 }
-                if (bytesLeftToRead != 0)
+
+                if (doStats)
                 {
-                    Console.Error.WriteLine("Warning: {0} bytes unread at end of file", bytesLeftToRead);
+                    int nReadings = data.rawTimes.Length;
+                    Console.WriteLine("{0} readings", nReadings);
+                    double startTime = data.rawTimes[0] / 1000.0;
+                    double endTime = data.rawTimes[nReadings-1] / 1000.0;
+                    double totalTime = endTime - startTime;
+
+                    Console.WriteLine("Start, end, total time = {0:0.000} {1:0.000} {2:0.000}",
+                        startTime, endTime, totalTime);
+
+                    int nAccChanges = LogFile.CountChanges(data.accChanged);
+                    int nMagChanges = LogFile.CountChanges(data.magChanged);
+                    int nGyroChanges = LogFile.CountChanges(data.gyroChanged);
+
+                    Console.WriteLine("Acc: {0} changes, avg time {1:0.000} msec", nAccChanges, totalTime / nAccChanges * 1000.0);
+                    Console.WriteLine("Mag: {0} changes, avg time {1:0.000} msec", nMagChanges, totalTime / nMagChanges * 1000.0);
+                    Console.WriteLine("Gyro: {0} changes, avg time {1:0.000} msec", nGyroChanges, totalTime / nGyroChanges * 1000.0);
+
                 }
+
+
             }
             catch (Exception e)
             {
                 Console.Error.WriteLine("Exception: {0}", e.Message);
             }
-        }
-
-        static double[] ReadAndScaleVector(BinaryReader file, double s)
-        {
-            Int16 i1 = file.ReadInt16();
-            Int16 i2 = file.ReadInt16();
-            Int16 i3 = file.ReadInt16();
-            return new double[] { i1 / s, i2 / s, i3 / s };
         }
 
         static bool ReadArgs(string[] args)
@@ -68,6 +78,12 @@ namespace RocketCode
                 {
                     switch (args[ii])
                     {
+                        case "-dump":
+                            doDump = true;
+                            break;
+                        case "-stats":
+                            doStats = true;
+                            break;
                         default:
                             ArgError(String.Format("Unknown switch {0}", args[ii]));
                             return false;
