@@ -4,23 +4,18 @@
 
 // include barometer library:
 #include <Wire.h>
-#include <SparkFunMPL3115A2.h>
+#include <SparkFunMPL3115A2.h> // The Adafruit driver is too slow for retrieving data.
 
 #include <Adafruit_Sensor.h>
-#include <Adafruit_BNO055.h>
+#include <cw_Adafruit_BNO055.h>
 
 MPL3115A2 barometer;
 
-//#include <Adafruit_MPL3115A2.h>
-//Adafruit_MPL3115A2 barometer = Adafruit_MPL3115A2();
-
-/* Set the delay between fresh samples */
-#define BNO055_SAMPLERATE_DELAY_MS (100)
 Adafruit_BNO055 bno = Adafruit_BNO055();
 
 const int sdChipSelect = 10;
 File file;
-String fileName = "Logxxx.txt";
+char *fileName = "Logxxx.txt";
 unsigned long nextAltitude;
 int altitudeDelay = 1000;
 unsigned long lastTick;
@@ -39,26 +34,15 @@ void setup() {
     ; // wait for serial port to connect. Needed for native USB port only
   }
 
-  Serial.println("\nInitializing barometer...");
-
-//  if (!barometer.begin())
-//  {
-//    Serial.println("initialization failed");
-//    while (1);
-//  }
-  
   // Configure the barometer.
   Serial.println("Initialize barometer");
   barometer.begin();
   barometer.setModeAltimeter(); // Measure altitude above sea level in meters
-  //barometer.setModeBarometer(); // Measure pressure in Pascals from 20 to 110 kPa
   barometer.setOversampleRate(7); // 7 for 128.
   barometer.enableEventFlags(); // Enable all three pressure and temp event flags 
 
   // Configure the IMU
   Serial.println("Initialize IMU");
-// OPERATION_MODE_IMUPLUS
-// OPERATION_MODE_ACCGYRO 
   if(!bno.begin(Adafruit_BNO055::OPERATION_MODE_AMG, Adafruit_BNO055::ACC_RANGE_8G))
   {
     Serial.print("No BNO055 detected");
@@ -74,9 +58,6 @@ void setup() {
   }
   digitalWrite(ERRORLED,LOW);
 }
-
-// Adafruit library would hang on reading temperature if altitude was not read first. 
-// Sparkfun library allows reducing the oversampling from 128x.
 
 int lineCount = 0;
 
@@ -180,11 +161,6 @@ void loop()
     imu::Vector<3> acceleration = bno.getVector(Adafruit_BNO055::VECTOR_ACCELEROMETER);
     imu::Vector<3> magnetometer = bno.getVector(Adafruit_BNO055::VECTOR_MAGNETOMETER);
     imu::Vector<3> gyroscope = bno.getVector(Adafruit_BNO055::VECTOR_GYROSCOPE);
-//    imu::Quaternion quat = bno.getQuat();
-//    imu::Vector<3> linearAcceleration = bno.getVector(Adafruit_BNO055::VECTOR_LINEARACCEL);
-//    imu::Vector<3> gravity = bno.getVector(Adafruit_BNO055::VECTOR_GRAVITY);
-//    uint8_t sys, gyro, accel, mag = 0;
-//    bno.getCalibration(&sys, &gyro, &accel, &mag);
     t5 = millis();
 
     file.print(format(t1,8));
@@ -197,21 +173,6 @@ void loop()
     printVector(" acc ",acceleration);
     printVector(" mag ",magnetometer);
     printVector(" gyro ",gyroscope);
-//    file.print(" quat ");
-//    file.print(format(quat.w(),5,9));
-//    file.print(format(quat.x(),5,9));
-//    file.print(format(quat.y(),5,9));
-//    file.print(format(quat.z(),5,9));
-//    file.print(" linear ");
-//    file.print(format(linearAcceleration.x(),2,7));
-//    file.print(format(linearAcceleration.y(),2,7));
-//    file.print(format(linearAcceleration.z(),2,7));
-//    file.print(" grav ");
-//    file.print(format(gravity.x(),2,7));
-//    file.print(format(gravity.y(),2,7));
-//    file.print(format(gravity.z(),2,7));
-//    file.print(" cal ");
-//    file.print(accel);
     file.println(format(t5,8));
 
     digitalWrite(2,LOW);
@@ -230,7 +191,7 @@ void loop()
     }
     file.close();
   }
-  waitForTick(15);
+  waitForTick(5);
 }
 
 File getUniqueFile()
@@ -245,22 +206,19 @@ File getUniqueFile()
   // We normally get here with the name of an empty slot, corresponding to jj.
   // If there are no empty slots then we append data to the existing Log999.txt.
   // We open a slot for the next run.
-  String nextFile = String(fileName);
-  pasteThreeDigitsIntoName(nextFile,3,jj+1);
-  SD.remove(nextFile);
-//  Serial.print("open unique file: ");
-//  Serial.println(fileName);
-//  Serial.print("Next file: ");
-//  Serial.println(nextFile);
+  pasteThreeDigitsIntoName(fileName,3,jj+1);
+  SD.remove(fileName);
+  pasteThreeDigitsIntoName(fileName,3,jj);
   return SD.open(fileName,FILE_WRITE);
 }
 
-void pasteThreeDigitsIntoName(String& str, int place, unsigned int num)
+void pasteThreeDigitsIntoName(char *str, int place, unsigned int num)
 {
-    String numstr = String(num%1000+1000);
-    str[place] = numstr[1];
-    str[place+1] = numstr[2];
-    str[place+2] = numstr[3];  
+  str[place+2] = '0' + num % 10;
+  num /= 10;
+  str[place+1] = '0' + num % 10;
+  num /= 10;
+  str[place] = '0' + num % 10;
 }
 
 void waitForTick(int d)
