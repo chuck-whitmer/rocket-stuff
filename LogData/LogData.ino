@@ -4,10 +4,10 @@
 
 // include barometer library:
 #include <Wire.h>
-#include "SparkFunMPL3115A2.h"
+#include <SparkFunMPL3115A2.h>
 
 #include <Adafruit_Sensor.h>
-#include "Adafruit_BNO055.h"
+#include <Adafruit_BNO055.h>
 
 MPL3115A2 barometer;
 
@@ -57,13 +57,14 @@ void setup() {
 
   // Configure the IMU
   Serial.println("Initialize IMU");
-  if(!bno.begin(Adafruit_BNO055::OPERATION_MODE_IMUPLUS, Adafruit_BNO055::ACC_RANGE_8G))
+// OPERATION_MODE_IMUPLUS
+// OPERATION_MODE_ACCGYRO 
+  if(!bno.begin(Adafruit_BNO055::OPERATION_MODE_AMG, Adafruit_BNO055::ACC_RANGE_8G))
   {
     Serial.print("No BNO055 detected");
     while(1);
   }
   bno.setExtCrystalUse(true);
-  //bno.setAccRange(Adafruit_BNO055::ACC_RANGE_8G);
   
   Serial.println("Initializing SD card");
   if (!SD.begin(sdChipSelect))
@@ -177,11 +178,13 @@ void loop()
     }
     t3 = millis();
     imu::Vector<3> acceleration = bno.getVector(Adafruit_BNO055::VECTOR_ACCELEROMETER);
-    imu::Quaternion quat = bno.getQuat();
-    imu::Vector<3> linearAcceleration = bno.getVector(Adafruit_BNO055::VECTOR_LINEARACCEL);
-    imu::Vector<3> gravity = bno.getVector(Adafruit_BNO055::VECTOR_GRAVITY);
-    uint8_t sys, gyro, accel, mag = 0;
-    bno.getCalibration(&sys, &gyro, &accel, &mag);
+    imu::Vector<3> magnetometer = bno.getVector(Adafruit_BNO055::VECTOR_MAGNETOMETER);
+    imu::Vector<3> gyroscope = bno.getVector(Adafruit_BNO055::VECTOR_GYROSCOPE);
+//    imu::Quaternion quat = bno.getQuat();
+//    imu::Vector<3> linearAcceleration = bno.getVector(Adafruit_BNO055::VECTOR_LINEARACCEL);
+//    imu::Vector<3> gravity = bno.getVector(Adafruit_BNO055::VECTOR_GRAVITY);
+//    uint8_t sys, gyro, accel, mag = 0;
+//    bno.getCalibration(&sys, &gyro, &accel, &mag);
     t5 = millis();
 
     file.print(format(t1,8));
@@ -191,25 +194,24 @@ void loop()
     file.print(" temp ");
     file.print(format(tempC,1,7));
     file.print(format(t3,7));
-    file.print(" acc ");
-    file.print(format(acceleration.x(),2,7));
-    file.print(format(acceleration.y(),2,7));
-    file.print(format(acceleration.z(),2,7));
-    file.print(" quat ");
-    file.print(format(quat.w(),5,9));
-    file.print(format(quat.x(),5,9));
-    file.print(format(quat.y(),5,9));
-    file.print(format(quat.z(),5,9));
-    file.print(" linear ");
-    file.print(format(linearAcceleration.x(),2,7));
-    file.print(format(linearAcceleration.y(),2,7));
-    file.print(format(linearAcceleration.z(),2,7));
-    file.print(" grav ");
-    file.print(format(gravity.x(),2,7));
-    file.print(format(gravity.y(),2,7));
-    file.print(format(gravity.z(),2,7));
-    file.print(" cal ");
-    file.print(accel);
+    printVector(" acc ",acceleration);
+    printVector(" mag ",magnetometer);
+    printVector(" gyro ",gyroscope);
+//    file.print(" quat ");
+//    file.print(format(quat.w(),5,9));
+//    file.print(format(quat.x(),5,9));
+//    file.print(format(quat.y(),5,9));
+//    file.print(format(quat.z(),5,9));
+//    file.print(" linear ");
+//    file.print(format(linearAcceleration.x(),2,7));
+//    file.print(format(linearAcceleration.y(),2,7));
+//    file.print(format(linearAcceleration.z(),2,7));
+//    file.print(" grav ");
+//    file.print(format(gravity.x(),2,7));
+//    file.print(format(gravity.y(),2,7));
+//    file.print(format(gravity.z(),2,7));
+//    file.print(" cal ");
+//    file.print(accel);
     file.println(format(t5,8));
 
     digitalWrite(2,LOW);
@@ -228,7 +230,7 @@ void loop()
     }
     file.close();
   }
-  waitForTick(20);
+  waitForTick(15);
 }
 
 File getUniqueFile()
@@ -267,6 +269,14 @@ void waitForTick(int d)
   unsigned long diff = lastTick - millis();
   if (diff < 1000)
     delay(diff);
+}
+
+void printVector(char *label, imu::Vector<3> vec)
+{
+    file.print(label);
+    file.print(format(vec.x(),2,8));
+    file.print(format(vec.y(),2,8));
+    file.print(format(vec.z(),2,8));
 }
 
 char chars[21];
