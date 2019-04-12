@@ -19,7 +19,7 @@ namespace RocketCode
         public bool[] magChanged;
         public bool[] gyroChanged;
 
-        public LogFile(string filename)
+        public LogFile(string filename, long iStart=0, long iLength = long.MaxValue)
         {
             List<UInt32> timeList = new List<UInt32>();
             List<float> altList = new List<float>();
@@ -39,6 +39,17 @@ namespace RocketCode
                 // Format 01 consists of repeated records.
                 // time, altitude, accelerometer vector, magnetometer vector, gyroscope vector
                 const long recordSize = sizeof(UInt32) + sizeof(float) + 9 * sizeof(Int16);
+
+                long recordsLeftToRead = bytesLeftToRead / recordSize;
+
+                if (iStart != 0)
+                {
+                    recordsLeftToRead -= iStart;
+                    file.BaseStream.Seek(iStart * recordSize, SeekOrigin.Current);
+                }
+                if (recordsLeftToRead > iLength)
+                    recordsLeftToRead = iLength;
+
                 while (bytesLeftToRead >= recordSize)
                 {
                     UInt32 time = file.ReadUInt32();

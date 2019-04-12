@@ -97,6 +97,30 @@
 <pad name="3V" x="13.97" y="-6.35" drill="1.016" diameter="2.1844"/>
 <pad name="5V" x="13.97" y="-8.89" drill="1.016" diameter="2.1844"/>
 </package>
+<package name="JLEFT">
+<wire x1="-1.27" y1="22.86" x2="1.27" y2="22.86" width="0.127" layer="21"/>
+<wire x1="1.27" y1="22.86" x2="1.27" y2="-22.86" width="0.127" layer="21"/>
+<wire x1="1.27" y1="-22.86" x2="-1.27" y2="-22.86" width="0.127" layer="21"/>
+<wire x1="-1.27" y1="-22.86" x2="-1.27" y2="22.86" width="0.127" layer="21"/>
+<pad name="P0" x="0" y="21.59" drill="1.016" diameter="2.1844"/>
+<pad name="P1" x="0" y="19.05" drill="1.016" diameter="2.1844"/>
+<pad name="P2" x="0" y="16.51" drill="1.016" diameter="2.1844"/>
+<pad name="P3" x="0" y="13.97" drill="1.016" diameter="2.1844"/>
+<pad name="P4" x="0" y="11.43" drill="1.016" diameter="2.1844"/>
+<pad name="JGND" x="0" y="8.89" drill="1.016" diameter="2.1844"/>
+<pad name="JD2" x="0" y="6.35" drill="1.016" diameter="2.1844"/>
+<pad name="JD3" x="0" y="3.81" drill="1.016" diameter="2.1844"/>
+<pad name="JD4" x="0" y="1.27" drill="1.016" diameter="2.1844"/>
+<pad name="JD5" x="0" y="-1.27" drill="1.016" diameter="2.1844"/>
+<pad name="JD6" x="0" y="-3.81" drill="1.016" diameter="2.1844"/>
+<pad name="JD7" x="0" y="-6.35" drill="1.016" diameter="2.1844"/>
+<pad name="JD8" x="0" y="-8.89" drill="1.016" diameter="2.1844"/>
+<pad name="JD9" x="0" y="-11.43" drill="1.016" diameter="2.1844"/>
+<pad name="P14" x="0" y="-13.97" drill="1.016" diameter="2.1844"/>
+<pad name="P15" x="0" y="-16.51" drill="1.016" diameter="2.1844"/>
+<pad name="P16" x="0" y="-19.05" drill="1.016" diameter="2.1844"/>
+<pad name="P17" x="0" y="-21.59" drill="1.016" diameter="2.1844"/>
+</package>
 </packages>
 <symbols>
 <symbol name="ADA254">
@@ -113,6 +137,31 @@
 <pin name="DO" x="17.78" y="-5.08" length="middle" direction="out" rot="R180"/>
 <text x="-5.08" y="10.16" size="1.27" layer="94">uSD Breakout</text>
 <pin name="CLK" x="17.78" y="-10.16" length="middle" function="clk" rot="R180"/>
+</symbol>
+<symbol name="JLEFT">
+<pin name="JL1" x="10.16" y="20.32" length="middle" direction="nc" rot="R180"/>
+<pin name="JL2" x="10.16" y="17.78" length="middle" direction="nc" rot="R180"/>
+<pin name="JL3" x="10.16" y="15.24" length="middle" direction="nc" rot="R180"/>
+<pin name="JL4" x="10.16" y="12.7" length="middle" direction="nc" rot="R180"/>
+<pin name="JL5" x="10.16" y="10.16" length="middle" direction="nc" rot="R180"/>
+<pin name="GND" x="10.16" y="7.62" length="middle" direction="pwr" rot="R180"/>
+<pin name="D2" x="10.16" y="5.08" length="middle" rot="R180"/>
+<pin name="D3" x="10.16" y="2.54" length="middle" rot="R180"/>
+<pin name="D4" x="10.16" y="0" length="middle" rot="R180"/>
+<pin name="D5" x="10.16" y="-2.54" length="middle" rot="R180"/>
+<pin name="D6" x="10.16" y="-5.08" length="middle" rot="R180"/>
+<pin name="D7" x="10.16" y="-7.62" length="middle" rot="R180"/>
+<pin name="D8" x="10.16" y="-10.16" length="middle" rot="R180"/>
+<pin name="D9" x="10.16" y="-12.7" length="middle" rot="R180"/>
+<pin name="JL15" x="10.16" y="-15.24" length="middle" direction="nc" rot="R180"/>
+<pin name="JL16" x="10.16" y="-17.78" length="middle" direction="nc" rot="R180"/>
+<pin name="JL17" x="10.16" y="-20.32" length="middle" direction="nc" rot="R180"/>
+<pin name="JL18" x="10.16" y="-22.86" length="middle" direction="nc" rot="R180"/>
+<wire x1="-7.62" y1="22.86" x2="5.08" y2="22.86" width="0.254" layer="94"/>
+<wire x1="5.08" y1="22.86" x2="5.08" y2="-25.4" width="0.254" layer="94"/>
+<wire x1="5.08" y1="-25.4" x2="-7.62" y2="-25.4" width="0.254" layer="94"/>
+<wire x1="-7.62" y1="-25.4" x2="-7.62" y2="22.86" width="0.254" layer="94"/>
+<text x="-7.62" y="23.114" size="1.778" layer="95">&gt;NAME</text>
 </symbol>
 </symbols>
 <devicesets>
@@ -132,6 +181,38 @@
 <connect gate="G$1" pin="DI" pad="DI"/>
 <connect gate="G$1" pin="DO" pad="DO"/>
 <connect gate="G$1" pin="GND" pad="GND"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="JLEFT">
+<gates>
+<gate name="G$1" symbol="JLEFT" x="0" y="2.54"/>
+</gates>
+<devices>
+<device name="" package="JLEFT">
+<connects>
+<connect gate="G$1" pin="D2" pad="JD2"/>
+<connect gate="G$1" pin="D3" pad="JD3"/>
+<connect gate="G$1" pin="D4" pad="JD4"/>
+<connect gate="G$1" pin="D5" pad="JD5"/>
+<connect gate="G$1" pin="D6" pad="JD6"/>
+<connect gate="G$1" pin="D7" pad="JD7"/>
+<connect gate="G$1" pin="D8" pad="JD8"/>
+<connect gate="G$1" pin="D9" pad="JD9"/>
+<connect gate="G$1" pin="GND" pad="JGND"/>
+<connect gate="G$1" pin="JL1" pad="P0"/>
+<connect gate="G$1" pin="JL15" pad="P14"/>
+<connect gate="G$1" pin="JL16" pad="P15"/>
+<connect gate="G$1" pin="JL17" pad="P16"/>
+<connect gate="G$1" pin="JL18" pad="P17"/>
+<connect gate="G$1" pin="JL2" pad="P1"/>
+<connect gate="G$1" pin="JL3" pad="P2"/>
+<connect gate="G$1" pin="JL4" pad="P3"/>
+<connect gate="G$1" pin="JL5" pad="P4"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -504,6 +585,7 @@ Each pin can provide or receive a maximum of 40 mA and has an internal pull-up r
 <parts>
 <part name="USD1" library="cwParts" deviceset="ADA254" device=""/>
 <part name="ARDUINO_NANO1" library="ArduinoNanoV30" deviceset="ARDUINO_NANO" device=""/>
+<part name="U$1" library="cwParts" deviceset="JLEFT" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -514,6 +596,9 @@ Each pin can provide or receive a maximum of 40 mA and has an internal pull-up r
 <instance part="ARDUINO_NANO1" gate="G$1" x="30.48" y="55.88" smashed="yes">
 <attribute name="NAME" x="15.24" y="25.4" size="1.778" layer="95"/>
 <attribute name="VALUE" x="15.24" y="22.86" size="1.778" layer="96"/>
+</instance>
+<instance part="U$1" gate="G$1" x="-15.24" y="53.34" smashed="yes">
+<attribute name="NAME" x="-22.86" y="76.454" size="1.778" layer="95"/>
 </instance>
 </instances>
 <busses>
