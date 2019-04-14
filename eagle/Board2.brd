@@ -162,6 +162,8 @@
 <wire x1="70" y1="0" x2="70" y2="50" width="0" layer="20"/>
 <wire x1="70" y1="50" x2="0" y2="50" width="0" layer="20"/>
 <wire x1="0" y1="50" x2="0" y2="0" width="0" layer="20"/>
+<text x="3.302" y="8.382" size="1.778" layer="25" font="vector" rot="R90">Flight Computer v 1.0 board 2</text>
+<text x="68.58" y="15.24" size="1.778" layer="25" font="vector" rot="R90">chuck@whitmer.us</text>
 </plain>
 <libraries>
 <library name="cwParts">
