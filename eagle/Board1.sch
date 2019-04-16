@@ -1065,6 +1065,8 @@ Each pin can provide or receive a maximum of 40 mA and has an internal pull-up r
 <classes>
 <class number="0" name="default" width="0" drill="0">
 </class>
+<class number="1" name="power" width="0.508" drill="0">
+</class>
 </classes>
 <parts>
 <part name="ARDUINO_NANO1" library="ArduinoNanoV30" deviceset="ARDUINO_NANO" device=""/>
@@ -1109,7 +1111,7 @@ Each pin can provide or receive a maximum of 40 mA and has an internal pull-up r
 <busses>
 </busses>
 <nets>
-<net name="GND2" class="0">
+<net name="GND2" class="1">
 <segment>
 <pinref part="ARDUINO_NANO1" gate="G$1" pin="GND@2"/>
 <wire x1="83.82" y1="45.72" x2="91.44" y2="45.72" width="0.1524" layer="91"/>
@@ -1130,7 +1132,7 @@ Each pin can provide or receive a maximum of 40 mA and has an internal pull-up r
 <label x="149.86" y="48.26" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="5V" class="0">
+<net name="5V" class="1">
 <segment>
 <pinref part="ARDUINO_NANO1" gate="G$1" pin="5V"/>
 <wire x1="83.82" y1="40.64" x2="93.98" y2="40.64" width="0.1524" layer="91"/>
@@ -1348,7 +1350,7 @@ Each pin can provide or receive a maximum of 40 mA and has an internal pull-up r
 <label x="152.4" y="38.1" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="N$16" class="0">
+<net name="N$16" class="1">
 <segment>
 <wire x1="88.9" y1="58.42" x2="86.36" y2="58.42" width="0.1524" layer="91"/>
 <wire x1="86.36" y1="58.42" x2="86.36" y2="48.26" width="0.1524" layer="91"/>
