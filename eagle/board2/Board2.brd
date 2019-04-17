@@ -948,7 +948,7 @@ design rules under a new name.</description>
 <attribute name="NAME" x="9.398" y="38.735" size="0.6096" layer="25" font="vector" ratio="20" rot="R90" align="bottom-center"/>
 <attribute name="PROD_ID" value=" SWCH-08441" x="63.5" y="60.325" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="SF_SKU" value="COM-00097" x="63.5" y="60.325" size="1.778" layer="27" rot="R90" display="off"/>
-<attribute name="VALUE" x="15.875" y="38.735" size="0.6096" layer="27" font="vector" ratio="20" rot="R90" align="top-center"/>
+<attribute name="VALUE" x="9.398" y="43.1546" size="0.6096" layer="27" font="vector" ratio="20"/>
 </element>
 <element name="IMU1" library="cwParts" package="ADA2472" value="ADA2472" x="36.83" y="14.605" smashed="yes">
 <attribute name="NAME" x="27.94" y="29.845" size="1.27" layer="25"/>

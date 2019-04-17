@@ -85,6 +85,8 @@
 -</text>
 <text x="3.175" y="7.747" size="1.778" layer="21" font="vector" rot="R90">Flight Computer v 1.0 board 1</text>
 <text x="68.58" y="12.7" size="1.778" layer="21" font="vector" rot="R90">chuck@whitmer.us</text>
+<text x="20.32" y="43.18" size="2.54" layer="22" font="vector" rot="MR270">If found please call
+(206) 910-2028</text>
 </plain>
 <libraries>
 <library name="ArduinoNanoV30">
