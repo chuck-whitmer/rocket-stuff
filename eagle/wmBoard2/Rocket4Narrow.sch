@@ -1521,8 +1521,6 @@
 </sheets>
 <errors>
 <approved hash="106,1,-10.16,46.99,!RESET,,,,,"/>
-<approved hash="106,1,55.88,12.7,!RTC_RST,,,,,"/>
-<approved hash="106,1,55.88,7.62,32KHZ,,,,,"/>
 <approved hash="106,1,-10.16,36.83,A0,,,,,"/>
 <approved hash="106,1,-10.16,34.29,A1,,,,,"/>
 <approved hash="106,1,-10.16,31.75,A2,,,,,"/>
@@ -1541,17 +1539,13 @@
 <approved hash="106,1,8.89,34.29,EN,,,,,"/>
 <approved hash="106,1,-10.16,16.51,MISO,,,,,"/>
 <approved hash="106,1,-10.16,19.05,MOSI,,,,,"/>
-<approved hash="106,1,55.88,5.08,RTC_BAT_OUT,,,,,"/>
 <approved hash="106,1,-10.16,21.59,SCK,,,,,"/>
-<approved hash="106,1,55.88,10.16,SQW,,,,,"/>
 <approved hash="106,1,30.48,31.75,VBUS,,,,,"/>
 <approved hash="106,1,8.89,31.75,VBUS,,,,,"/>
-<approved hash="113,1,-52.4129,11.6561,BNO055-1,,,,,"/>
-<approved hash="113,1,56.4342,30.9922,MPL3115A2,,,,,"/>
-<approved hash="113,1,-10.3971,26.4439,JP1,,,,,"/>
-<approved hash="113,1,8.65293,24.3561,JP3,,,,,"/>
-<approved hash="113,1,-52.4129,39.5961,BNO055-2,,,,,"/>
-<approved hash="113,1,56.6668,2.31394,DS3231,,,,,"/>
+<approved hash="113,1,-52.4129,11.6256,BNO055-1,,,,,"/>
+<approved hash="113,1,56.4342,30.9618,MPL3115A2,,,,,"/>
+<approved hash="113,1,-10.3971,26.4744,JP1,,,,,"/>
+<approved hash="113,1,8.65293,24.3256,JP3,,,,,"/>
 </errors>
 </schematic>
 </drawing>
