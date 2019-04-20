@@ -2,7 +2,7 @@ $fn = 200;
 inch = 25.4;
 
 include <RocketCouplers.scad>
-bt60adj = 0.0;
+bt60adj = 0.0; // 0.0 is a tight fit on Prusa.
 
 rOut = bt60od/2;
 rIn = bt60id/2 - bt60adj;
