@@ -10,12 +10,13 @@ bt60adj = 0.0; // Zero adjust works on Prusa. 0.15 layer height.  20% infill.
 rOut = bt60od/2;
 rIn = bt60id/2 - bt60adj;
 
-width = 2*rOut/sqrt(3);
-h = rOut*(1-sqrt(2/3)) + (rOut-rIn);
+width = 20;  // By fiat. Works for BT-60 and larger.
+hPrime = max(rOut-1.5, sqrt(3)/2*width); // -1.5 to butt against ruler.
+h = 2*rOut - hPrime - sqrt(rIn*rIn - (width/2)*(width/2));
 
 echo(width, rOut, h);
 
-yBottom = sqrt(3)*width/2 - 2* rOut;
+yBottom = hPrime - 2*rOut;
 
 difference()
 {
@@ -31,9 +32,11 @@ difference()
             }
         }
 
+        x1 = rIn-wall;
+        x2 = rIn;
         rotate_extrude()
-        translate([rIn-wall,0])
-        square([wall,2*baseHeight]);
+        polygon([[x1,0],[x2,0],[x2,2*baseHeight-1],
+        [x2-1,2*baseHeight],[x1,2*baseHeight]]);
     }   
     translate([0,0,baseHeight])
     linear_extrude(2*baseHeight)
