@@ -6,9 +6,9 @@ include <RocketCouplers.scad>
 wall = 3;
 baseHeight = 20;
 
-bt60adj = 0.1;
-rOut = bt60od;
-rIn = bt60id - bt60adj;
+bt60adj = 0.0; // Zero adjust works on Prusa. 0.15 layer height.  20% infill.
+rOut = bt60od/2;
+rIn = bt60id/2 - bt60adj;
 
 width = 2*rOut/sqrt(3);
 h = rOut*(1-sqrt(2/3)) + (rOut-rIn);
