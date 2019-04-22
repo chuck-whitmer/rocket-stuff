@@ -7,8 +7,9 @@ wall = 3;
 baseHeight = 20;
 
 bt60adj = 0.0; // Zero adjust works on Prusa. 0.15 layer height.  20% infill.
-rOut = bt60od/2;
-rIn = bt60id/2 - bt60adj;
+bt80adj = 0.0;
+rOut = bt80od/2;
+rIn = bt80id/2 - bt80adj;
 
 width = 20;  // By fiat. Works for BT-60 and larger.
 hPrime = max(rOut-1.5, sqrt(3)/2*width); // -1.5 to butt against ruler.
