@@ -84,6 +84,9 @@ namespace RocketCode
                         case "-stats":
                             doStats = true;
                             break;
+                        case "-?":
+                            ShowUsage();
+                            return false;
                         default:
                             ArgError(String.Format("Unknown switch {0}", args[ii]));
                             return false;
@@ -105,6 +108,18 @@ namespace RocketCode
                 return false;
             }
             return true;
+        }
+
+        static void ShowUsage()
+        {
+            Console.WriteLine(@"
+ReadDat <options> <filename>
+  Reads a binary data log file.
+  Options:
+    -dump              Creates a text file containing the data.
+    -stats             Reports stats about the data.
+");
+            
         }
 
         static void ArgError(string msg)
