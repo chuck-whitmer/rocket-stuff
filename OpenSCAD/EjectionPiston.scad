@@ -9,7 +9,7 @@ bt55adj = 0.2;
 bt50adj = 0.2;
 
 r1 = bt60id/2 - bt60adj; 
-wall = 3;
+wall = 3.4;
 h1 = 0.5*inch;
 h2 = 0.5*inch;
 h3 = 1.0*inch;
