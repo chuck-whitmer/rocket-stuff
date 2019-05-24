@@ -4,7 +4,7 @@ inch = 25.4;
 include <RocketCouplers.scad>
 bt80adj = 0.3;
 bt70adj = 0.3;
-bt60adj = 0.3;
+bt60adj = 0.2; // Fits nicely with Prusa.
 bt55adj = 0.2;
 bt50adj = 0.2;
 
