@@ -1,4 +1,4 @@
-$fn = 100;
+$fn = 200;
 inch = 25.4;
 
 include <RocketCouplers.scad>
@@ -82,21 +82,72 @@ module CameraU838()
 }
 
 
-difference()
-{
-    union()
-    {
-        hollowCylinderAsBase(r1,wall1,h1);
-        translate([0,0,h1])
-        hollowConeWithDrop(r2a,r2b,wall2,h2);
-        translate([0,0,h1+h2])
-        hollowCylinderWithDrop(r3,wall2,h3);
-    }
+    bottom = false; top = true;
+//    bottom = true; top = false;
 
-   
-    translate([-0.9*inch,0,1.2*inch])
-    rotate([0,-57,0])
-    translate([0.05*inch,0,0])
-    CameraU838();
-   
-}
+    breakHeight = 1.51*inch;
+    slope2 = (r2b - r2a) / h2;
+    r2c = r2a + (breakHeight - h1) * slope2;
+    h2cUp = 0.1*inch;
+    h2cDown = wall2/2 / slope2;
+    h2c = h2cUp + h2cDown;
+
+
+    difference()
+    {
+        union()
+        {
+            if (top)
+            intersection()
+            {
+                translate([0,0,breakHeight])
+                cylinder(r=2*inch,h=h1+h2+h3);
+                union()
+                {
+                    hollowCylinderAsBase(r1,wall1,h1);
+                    translate([0,0,h1])
+                    hollowConeWithDrop(r2a,r2b,wall2,h2);
+                    translate([0,0,h1+h2])
+                    hollowCylinderWithDrop(r3,wall2,h3);
+                }
+            }
+            if (bottom)
+            intersection()
+            {
+                cylinder(r=2*inch,h=breakHeight);
+                union()
+                {
+                    hollowCylinderAsBase(r1,wall1,h1);
+                    translate([0,0,h1])
+                    hollowConeWithDrop(r2a,r2b,wall2,h2);
+                    translate([0,0,h1+h2])
+                    hollowCylinderWithDrop(r3,wall2,h3);
+                }
+            }
+            if (bottom)
+            {
+                translate([0,0,breakHeight-h2cDown])
+                hollowCylinderWithDrop(r2c-wall2,wall2/2,h2c);
+            }
+            if (bottom)
+            {
+                // Notch/key
+                translate([r2c-3*wall2/2,0,breakHeight])
+                translate([0,-h2cUp/2,-h2cUp])
+                cube([wall2,h2cUp,2*h2cUp]);
+            }
+        }
+        if (top)
+        {
+            // Notch/key
+            translate([r2c-3*wall2/2,0,breakHeight])
+            translate([0,-h2cUp/2,-h2cUp])
+            cube([wall2,h2cUp,2*h2cUp]);
+        }
+        color("green")
+        translate([-0.9*inch,0,1.2*inch])
+        rotate([0,-57,0])
+        translate([-0.05*inch,0,0])
+        CameraU838();
+       
+    }
