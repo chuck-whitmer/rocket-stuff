@@ -186,7 +186,7 @@
 <wire x1="-6" y1="1.5" x2="6" y2="1.5" width="0.127" layer="21"/>
 <wire x1="6" y1="1.5" x2="6" y2="1.25" width="0.127" layer="21"/>
 <text x="-6" y="2" size="1.27" layer="25">&gt;NAME</text>
-<polygon width="0.127" layer="25">
+<polygon width="0.127" layer="21">
 <vertex x="4" y="1.5"/>
 <vertex x="4" y="-1.5"/>
 <vertex x="4.75" y="-1.5"/>
