@@ -26,6 +26,20 @@ module hollowCylinderAsBase(r,wall,h)
     polygon(pts,convexity=2);
 }
 
+module cylinderAsBase(r,h)
+{
+    pts = [
+        [0,h],
+        [r,h],
+        [r,1],
+        [r-1,0],
+        [0,0]];
+    rotate_extrude()
+    polygon(pts,convexity=2);
+}
+
+//cylinderAsBase(20,10);
+
 module hollowCylinderWithDrop(r,wall,h)
 {
     pts = [

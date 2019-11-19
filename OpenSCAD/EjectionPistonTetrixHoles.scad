@@ -1,6 +1,7 @@
 $fn = 200;
 inch = 25.4;
 
+include <tetrix_holes.scad>
 include <RocketCouplers.scad>
 bt80adj = 0.3;
 bt70adj = 0.3;
@@ -37,9 +38,10 @@ for (angle=[0,90,180,270])
 
 difference()
 {
-    hollowCylinderAsBase(r1,r1-1,h1);
-    translate([r1/3,0,2])
-    cylinder(r=1,h=h1);
+    cylinderAsBase(r1,h1);
+    translate([0,0,h1])
+    littleHoles(2);
+    littleHoles(2);
 }
 translate([0,0,h1])
 hollowCylinderWithDrop(r1,wall,h2);
